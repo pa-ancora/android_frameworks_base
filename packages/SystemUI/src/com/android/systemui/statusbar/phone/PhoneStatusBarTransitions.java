@@ -19,8 +19,14 @@ package com.android.systemui.statusbar.phone;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.res.Resources;
 import android.telephony.MSimTelephonyManager;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.View;
 
 import com.android.systemui.R;
@@ -39,8 +45,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private Animator mCurrentAnimation;
 
     public PhoneStatusBarTransitions(PhoneStatusBarView view) {
-        super(view, R.drawable.status_background, R.color.status_bar_background_opaque,
-                R.color.status_bar_background_semi_transparent);
+        super(view, new PhoneStatusBarBackgroundDrawable(view.getContext()));
         mView = view;
         final Resources res = mView.getContext().getResources();
         mIconAlphaWhenOpaque = res.getFraction(R.dimen.status_bar_icon_drawing_alpha, 1, 1);
@@ -157,6 +162,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
             }
         }
     }
+
     protected static class PhoneStatusBarBackgroundDrawable
             extends BarTransitions.BarBackgroundDrawable {
         private final Context mContext;
