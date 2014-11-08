@@ -356,8 +356,8 @@ bool BootAnimation::threadLoop()
     }
 
     eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-    eglDestroyContext(mDisplay, mContext);
     eglDestroySurface(mDisplay, mSurface);
+    eglDestroyContext(mDisplay, mContext);
     mFlingerSurface.clear();
     mFlingerSurfaceControl.clear();
     eglTerminate(mDisplay);
