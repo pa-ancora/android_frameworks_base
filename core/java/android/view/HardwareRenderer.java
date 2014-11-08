@@ -1915,14 +1915,14 @@ public abstract class HardwareRenderer {
                     if (EGLImpl.getInitCount(sEglDisplay) == 1) {
                         usePbufferSurface(eglContext);
                         GLES20Canvas.terminateCaches();
+                        
+                        sEgl.eglMakeCurrent(sEglDisplay, EGL_NO_SURFACE,
+                                EGL_NO_SURFACE, EGL_NO_CONTEXT);
+                        sEgl.eglDestroySurface(sEglDisplay, sPbuffer);
 
                         sEgl.eglDestroyContext(sEglDisplay, eglContext);
                         sEglContextStorage.set(null);
                         sEglContextStorage.remove();
-
-                        sEgl.eglDestroySurface(sEglDisplay, sPbuffer);
-                        sEgl.eglMakeCurrent(sEglDisplay, EGL_NO_SURFACE,
-                                EGL_NO_SURFACE, EGL_NO_CONTEXT);
 
                         sEgl.eglReleaseThread();
                         sEgl.eglTerminate(sEglDisplay);
